@@ -1,6 +1,5 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
-#include <functional>
 #include <print>
 
 auto update(void *data) -> void {
