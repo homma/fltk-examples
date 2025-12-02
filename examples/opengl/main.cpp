@@ -2,6 +2,8 @@
 #include <FL/Fl_Gl_Window.H>
 #include <FL/Fl_Window.H>
 #include <FL/gl.h>
+#include <cmath>
+#include <numbers>
 
 int fps = 30;
 
@@ -12,12 +14,35 @@ auto draw(Fl_Gl_Window &win) -> void {
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  glColor3f(0.0, 0.0, 1.0);
-
   glBegin(GL_TRIANGLES);
-  glVertex2f(0.0, 0.4);
-  glVertex2f(0.4, -0.3);
-  glVertex2f(-0.4, -0.3);
+
+  auto radius = 0.9;
+  auto deg2rad = std::numbers::pi / 180;
+
+  {
+    glColor3f(1.0, 0.0, 0.0);
+    auto theta = 90 * deg2rad;
+    auto x = std::cos(theta) * radius;
+    auto y = std::sin(theta) * radius;
+    glVertex2f(x, y);
+  }
+
+  {
+    glColor3f(0.0, 1.0, 0.0);
+    auto theta = -30 * deg2rad;
+    auto x = std::cos(theta) * radius;
+    auto y = std::sin(theta) * radius;
+    glVertex2f(x, y);
+  }
+
+  {
+    glColor3f(0.0, 0.0, 1.0);
+    auto theta = -150 * deg2rad;
+    auto x = std::cos(theta) * radius;
+    auto y = std::sin(theta) * radius;
+    glVertex2f(x, y);
+  }
+
   glEnd();
 
   glFlush();
