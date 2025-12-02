@@ -8,7 +8,6 @@
 int fps = 30;
 
 auto draw(Fl_Gl_Window &win) -> void {
-  win.mode(FL_RGB);
   win.make_current();
 
   glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -77,6 +76,7 @@ auto main() -> int {
     gl_win = new Fl_Gl_Window(left, top, width, height);
 
     gl_win->color(FL_WHITE);
+    gl_win->mode(FL_RGB);
     gl_win->end();
   }
 
