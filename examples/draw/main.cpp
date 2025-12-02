@@ -51,19 +51,18 @@ auto main() -> int {
     win->color(54);
   }
 
-  auto canvas_width = 300;
-  auto canvas_height = 300;
+  // canvas
   {
-    auto left = (win->w() - canvas_width) / 2.0;
-    auto top = (win->h() - canvas_height) / 2.0;
-    canvas = new Fl_Box(left, top, canvas_width, canvas_height);
+    auto width = 300;
+    auto height = 300;
+    auto left = (win->w() - width) / 2.0;
+    auto top = (win->h() - height) / 2.0;
+    canvas = new Fl_Box(left, top, width, height);
 
     canvas->box(FL_NO_BOX);
     canvas->color(FL_WHITE);
-  }
 
-  {
-    surface = new Fl_Image_Surface(canvas_width, canvas_height);
+    surface = new Fl_Image_Surface(width, height);
   }
 
   win->end();
