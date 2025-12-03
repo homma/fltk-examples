@@ -7,6 +7,21 @@
 
 int fps = 30;
 
+struct Point {
+  float x;
+  float y;
+};
+
+auto point_from_angle_distance(float degree, float distance) -> Point {
+  auto deg2rad = std::numbers::pi / 180;
+
+  auto theta = degree * deg2rad;
+  float x = std::cos(theta) * distance;
+  float y = std::sin(theta) * distance;
+
+  return Point{x, y};
+}
+
 auto draw(Fl_Gl_Window &win) -> void {
   win.make_current();
 
@@ -16,31 +31,19 @@ auto draw(Fl_Gl_Window &win) -> void {
   glBegin(GL_TRIANGLES);
 
   auto radius = 0.9;
-  auto deg2rad = std::numbers::pi / 180;
+  Point p;
 
-  {
-    glColor3f(1.0, 0.0, 0.0);
-    auto theta = 90 * deg2rad;
-    auto x = std::cos(theta) * radius;
-    auto y = std::sin(theta) * radius;
-    glVertex2f(x, y);
-  }
+  glColor3f(1.0, 0.0, 0.0);
+  p = point_from_angle_distance(90, radius);
+  glVertex2f(p.x, p.y);
 
-  {
-    glColor3f(0.0, 1.0, 0.0);
-    auto theta = -30 * deg2rad;
-    auto x = std::cos(theta) * radius;
-    auto y = std::sin(theta) * radius;
-    glVertex2f(x, y);
-  }
+  glColor3f(0.0, 1.0, 0.0);
+  p = point_from_angle_distance(-30, radius);
+  glVertex2f(p.x, p.y);
 
-  {
-    glColor3f(0.0, 0.0, 1.0);
-    auto theta = -150 * deg2rad;
-    auto x = std::cos(theta) * radius;
-    auto y = std::sin(theta) * radius;
-    glVertex2f(x, y);
-  }
+  glColor3f(0.0, 0.0, 1.0);
+  p = point_from_angle_distance(-150, radius);
+  glVertex2f(p.x, p.y);
 
   glEnd();
 
