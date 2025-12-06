@@ -17,6 +17,10 @@ auto Push_Button::handle(int event) -> int {
     value(1);
     do_callback(FL_REASON_SELECTED);
     return 1;
+  case FL_DRAG:
+    value(1);
+    do_callback(FL_REASON_DRAGGED);
+    return 1;
   case FL_RELEASE:
     value(0);
     do_callback(FL_REASON_RELEASED);
