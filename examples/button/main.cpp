@@ -19,10 +19,10 @@ auto main() -> int {
 
   Fl_Button *button;
   {
-    auto left = 100;
-    auto top = 40;
     auto width = 300;
     auto height = 40;
+    auto left = (win->w() - width) / 2.0;
+    auto top = win->h() / 2.0 - height;
     auto text = "ボタン";
     button = new Fl_Button(left, top, width, height, text);
   }
