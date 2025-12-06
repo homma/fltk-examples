@@ -31,8 +31,13 @@ auto main() -> int {
   button->color(FL_WHITE);
 
   button->callback([](Fl_Widget *w) {
-    auto value = Fl::event_button();
-    std::println("Button Clicked. Value: {}.", value);
+    auto reason = (int)Fl::callback_reason();
+    auto event = Fl::event();
+    auto button = Fl::event_button();
+    auto click = Fl::event_is_click();
+    std::println(
+        "Repeat Button Event reason: {} event: {} button: {} clicked: {}.",
+        reason, event, button, click);
   });
 
   win->end();
