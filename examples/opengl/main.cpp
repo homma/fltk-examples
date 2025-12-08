@@ -3,10 +3,36 @@
 #include <FL/Fl_Window.H>
 #include <FL/gl.h>
 #include <cmath>
+#include <functional>
 #include <numbers>
 
-int fps = 30;
+// Lt_Gl_Window
+struct Lt_Gl_Window : public Fl_Gl_Window {
+  Lt_Gl_Window(int x, int y, int w, int h, const char *label = 0);
+  auto draw_callback(std::function<void(Lt_Gl_Window &)>) -> void;
 
+protected:
+  auto draw() -> void;
+
+private:
+  std::function<void(Lt_Gl_Window &)> draw_callback_fn = [](Lt_Gl_Window &win) {
+  };
+};
+
+Lt_Gl_Window::Lt_Gl_Window(int x, int y, int w, int h, const char *label)
+    : Fl_Gl_Window(x, y, w, h, label) {}
+
+auto Lt_Gl_Window::draw_callback(std::function<void(Lt_Gl_Window &win)> draw_cb)
+    -> void {
+  this->draw_callback_fn = draw_cb;
+}
+
+auto Lt_Gl_Window::draw() -> void {
+  this->draw_callback_fn(*this);
+  Fl_Gl_Window::draw();
+}
+
+// Point
 struct Point {
   float x;
   float y;
@@ -22,8 +48,12 @@ auto point_from_angle_distance(float degree, float distance) -> Point {
   return Point{x, y};
 }
 
-auto draw(Fl_Gl_Window &win) -> void {
+// draw callback function
+auto draw(Lt_Gl_Window &win) -> void {
   win.make_current();
+  if (not win.valid()) {
+    win.valid(1);
+  };
 
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -50,12 +80,6 @@ auto draw(Fl_Gl_Window &win) -> void {
   glFlush();
 }
 
-auto update(void *gl_win) -> void {
-  Fl_Gl_Window &win = *(Fl_Gl_Window *)gl_win;
-  draw(win);
-  Fl::repeat_timeout(1.0 / fps, update, gl_win);
-}
-
 auto main() -> int {
 
   Fl_Window *win;
@@ -70,23 +94,22 @@ auto main() -> int {
     win->color(54);
   }
 
-  Fl_Gl_Window *gl_win;
+  Lt_Gl_Window *gl_win;
   {
     auto width = 300;
     auto height = 300;
     auto left = (win->w() - width) / 2.0;
     auto top = (win->h() - height) / 2.0;
-    gl_win = new Fl_Gl_Window(left, top, width, height);
+    gl_win = new Lt_Gl_Window(left, top, width, height);
 
     gl_win->color(FL_WHITE);
     gl_win->mode(FL_RGB);
+    gl_win->draw_callback(draw);
     gl_win->end();
   }
 
   win->end();
   win->show();
-
-  Fl::add_timeout(1.0 / fps, update, gl_win);
 
   return Fl::run();
 }
