@@ -63,7 +63,7 @@ auto draw(Lt_Gl_Window &win) -> void {
   if (not win.valid()) {
     glLoadIdentity();
     glViewport(0, 0, win.pixel_w(), win.pixel_h());
-    glOrtho(0, win.w(), -win.h(), 0, 0, 1000);
+    glOrtho(0, win.w(), -win.h(), 0, 0, 1);
     win.valid(1);
   };
 
