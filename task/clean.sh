@@ -4,4 +4,4 @@ ROOT_DIR=$(dirname $0)/..
 
 cd ${ROOT_DIR}
 
-for i in examples/*; do (cd ${i}; ./clean.sh); done
+for i in src/*; do (cd ${i}; ./clean.sh); done
