@@ -63,7 +63,7 @@ auto draw(Lt_Gl_Window &win) -> void {
   if (not win.valid()) {
     glLoadIdentity();
     glViewport(0, 0, win.pixel_w(), win.pixel_h());
-    glOrtho(0, win.w(), -win.h(), 0, 0, 1);
+    glOrtho(0, win.w(), win.h(), 0, 0, 1);
     win.valid(1);
   };
 
@@ -74,20 +74,20 @@ auto draw(Lt_Gl_Window &win) -> void {
 
   auto radius = 150.0;
   Point p;
-  Point move = {150, -160};
+  Point move = {150, 160};
 
   glColor3f(1.0, 0.0, 0.0);
-  p = Point::from_angle_distance(90, radius);
+  p = Point::from_angle_distance(-90, radius);
   p.translate(move);
   glVertex2f(p.x, p.y);
 
   glColor3f(0.0, 1.0, 0.0);
-  p = Point::from_angle_distance(-30, radius);
+  p = Point::from_angle_distance(30, radius);
   p.translate(move);
   glVertex2f(p.x, p.y);
 
   glColor3f(0.0, 0.0, 1.0);
-  p = Point::from_angle_distance(-150, radius);
+  p = Point::from_angle_distance(150, radius);
   p.translate(move);
   glVertex2f(p.x, p.y);
 
